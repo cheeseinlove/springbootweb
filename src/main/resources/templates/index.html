@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>欢迎</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"
+          rel="stylesheet" />
+
+</head>
+
+<body ms-controller="viewmodel">
+<h1 th:text="${msg}">Hello World</h1>
+<button type="button" class="btn btn-primary" style="margin: 10px;" ms-click="@request">{{@text}}</button>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <td class="active">id</td>
+        <td class="success">姓名</td>
+        <td class="warning">性别</td>
+        <td class="danger">注册时间</td>
+        <td class="info">密码</td>
+        <td class="active">头像</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ms-for="el in @datalist">
+        <td >{{el.uid}}</td>
+        <td >{{el.uname}}</td>
+        <td>{{el.usex}}</td>
+        <td >{{el.uregtime}}</td>
+        <td >{{el.upassword}}</td>
+        <td>{{el.uhead}}</td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="//cdn.bootcss.com/myscript/1.2.3/myscript.js"></script>
+<script src="//cdn.bootcss.com/avalon.js/2.0s/avalon.js"></script>
+/**
+* Created by Intellij IDEA.
+* @Author LUOLIANG
+* @Date 2016/8/2
+* @Comment js文件，用于页面发送ajax请求
+*/
+
+//定义一个avalonjs的控制器
+<script th:inline="javascript">
+var viewmodel = avalon.define({
+//id必须和页面上定义的ms-controller名字相同，否则无法控制页面
+$id: "viewmodel",
+datalist: {},
+text: "请求数据",
+
+request: function () {
+$.ajax({
+type: "post",
+url: "/hello/msg",    //向springboot请求数据的url
+data: {},
+success: function (data) {
+$('button').removeClass("btn-primary").addClass("btn-success").attr('disabled', true);
+
+viewmodel.datalist = data;
+
+viewmodel.text = "数据请求成功，已渲染";
+}
+});
+}
+});
+
+</script>
+
+
+
+</body>
+</html>

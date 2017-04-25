@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <script type="text/javascript" src="/basic/bootstrapValidator.js"></script>
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!--引入wangEditor.css-->
+    <link rel="stylesheet" type="text/css" href="/wangEditor-2.1.22/dist/css/wangEditor.min.css"/>
+
+    <script type="text/javascript" src="/wangEditor-2.1.22/dist/js/wangEditor.min.js"></script>
+    <title>成电校园</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"
+          rel="stylesheet" />
+
+</head>
+
+<body ms-controller="viewmodel">
+<div class="panel panel-primary">
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Test</a>
+            </div>
+            <div>
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            校园服务
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">jmeter</a></li>
+                            <li><a href="#">EJB</a></li>
+                            <li><a href="#">Jasper Report</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">分离的链接</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">另一个分离的链接</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            论坛服务
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">jmeter</a></li>
+                            <li><a href="#">EJB</a></li>
+                            <li><a href="#">Jasper Report</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">分离的链接</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">另一个分离的链接</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            成电校园
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">jmeter</a></li>
+                            <li><a href="#">EJB</a></li>
+                            <li><a href="#">Jasper Report</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">分离的链接</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">另一个分离的链接</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+            </div>
+
+        </div>
+    </nav>
+</div>
+<div class="form-group">
+    <table>
+        <tr>
+            <td>
+                <div class="col-sm-offset-2 col-sm-10" >
+                    <button type="submit" class="btn btn-default"  onclick="reg()" >注册</button>
+                </div>
+            </td>
+            <td>
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default" onclick="login()" >登录</button>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div >
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span12">
+            <h3 class="text-center muted">
+              成电校园
+            </h3>
+        </div>
+    </div>
+</div>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <td class="active">标题</td>
+        <td class="success">作者</td>
+        <td class="warning">回复数</td>
+
+    </tr>
+    </thead>
+    <tbody>
+    <!--/*@thymesVar id="datalist" type="com"*/-->
+    <tr th:each="el:${datalist}">
+        <td th:text="${el.title}"> </td>
+        <td th:text="${el.tuid}"></td>
+        <td th:text="${el.replycount}">  </td>
+
+    </tr>
+    </tbody>
+</table>
+<div th:fragment="content" th:remove="tag">
+
+
+    <form method="POST" id="dataForm">
+        <div class="form-group form-group-lg">
+            <div class="input-group">
+                <div class="input-group-addon">标题：</div>
+                <input name="title" type="text" id="title" class="form-control"  placeholder="请输入帖子标题" />
+            </div>
+        </div>
+
+        <div class="form-group form-group-lg">
+            <div class="input-group">
+                <div class="input-group-addon">内容：</div>
+                <textarea id="content" name="content" style="width:100%; min-height:150px;"></textarea>
+            </div>
+        </div>
+        <input type="hidden" name="token" th:value="${session.token}"/>
+
+        <button type="button" class="btn btn-primary submit-btn" onclick="request()"><i class="fa fa-check"></i> 确定提交</button>
+        <button type="button" class="btn btn-default" onclick="history.back(-1)"><i class="fa fa-chevron-left"></i> 返回上级</button>
+    </form>
+    <script type="text/javascript" src="/basic/article.js"></script>
+</div>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="//cdn.bootcss.com/myscript/1.2.3/myscript.js"></script>
+<script src="//cdn.bootcss.com/avalon.js/2.0s/avalon.js"></script>
+
+<script th:inline="javascript">
+
+//id必须和页面上定义的ms-controller名字相同，否则无法控制页面
+
+
+
+        function request() {
+
+            var title=$("#title").val();
+            var content=$("#content").val();
+            $.ajax({
+                type: "post",
+                url: "/campus",    //向springboot请求数据的url
+                data: {
+                    title:title,
+                    content:content
+
+                },
+                success: function (data) {
+                 window.location.href='campus'
+
+                }
+            });
+        }
+
+
+</script>
+<script>
+    function login(){
+        window.location.href='hello/login';
+    }
+
+    function reg(){
+        window.location.href='hello/register';
+    }
+</script>
+
+
+</body>
+</html>

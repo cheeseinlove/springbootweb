@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>欢迎</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"
+          rel="stylesheet" />
+
+</head>
+
+<body role="document">
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+            <form class="form-horizontal" role="form" th:method="post" th:action="@{/hello/reg}" th:id="loginForm">
+                <div class="form-group">
+                    <label for="regusername" class="col-sm-2 control-label" >用户名</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="regusername" required="required" name="username"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="regPassword" class="col-sm-2 control-label">密码</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" id="regPassword" required="required" name="password"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <div class="checkbox">
+                            <label><input type="checkbox" />Remember me</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="button" class="btn btn-default" onclick="reg()" >注册</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script>
+    function reg(){
+  var username=$("#regusername").val();
+  var password=$("#regPassword").val();
+        $.ajax({
+            type: "post",
+            url: "/hello/register",    //向springboot请求数据的url
+            data: {
+                username:username,
+                password:password
+            },
+            success: function (data) {
+             if(data=="ok"){
+                 alert("注册成功");
+                 window.location.href='welcome';
+             }
+
+
+
+
+            }
+        });
+    }
+
+
+</script>
+</body>
+</html>

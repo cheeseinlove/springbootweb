@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.example.model.User" >
+    <id column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="uname" property="uname" jdbcType="VARCHAR" />
+    <result column="uregtime" property="uregtime" jdbcType="DATE" />
+    <result column="upassword" property="upassword" jdbcType="VARCHAR" />
+    <result column="usex" property="usex" jdbcType="INTEGER" />
+    <result column="uhead" property="uhead" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    uid, uname, uregtime, upassword, usex, uhead
+  </sql>
+  <select id="selectUser" resultMap="BaseResultMap" parameterType="com.example.model.User" >
+    select
+    uname,upassword
+    from user
+    where uname= #{uname,jdbcType=VARCHAR} AND upassword= #{upassword,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where uid = #{uid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where uid = #{uid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.model.User" >
+    insert into user (uid, uname, uregtime, 
+      upassword, usex, uhead
+      )
+    values (#{uid,jdbcType=INTEGER}, #{uname,jdbcType=VARCHAR}, #{uregtime,jdbcType=DATE}, 
+      #{upassword,jdbcType=VARCHAR}, #{usex,jdbcType=INTEGER}, #{uhead,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.model.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="uname != null" >
+        uname,
+      </if>
+      <if test="uregtime != null" >
+        uregtime,
+      </if>
+      <if test="upassword != null" >
+        upassword,
+      </if>
+      <if test="usex != null" >
+        usex,
+      </if>
+      <if test="uhead != null" >
+        uhead,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="uname != null" >
+        #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="uregtime != null" >
+        #{uregtime,jdbcType=DATE},
+      </if>
+      <if test="upassword != null" >
+        #{upassword,jdbcType=VARCHAR},
+      </if>
+      <if test="usex != null" >
+        #{usex,jdbcType=INTEGER},
+      </if>
+      <if test="uhead != null" >
+        #{uhead,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.model.User" >
+    update user
+    <set >
+      <if test="uname != null" >
+        uname = #{uname,jdbcType=VARCHAR},
+      </if>
+      <if test="uregtime != null" >
+        uregtime = #{uregtime,jdbcType=DATE},
+      </if>
+      <if test="upassword != null" >
+        upassword = #{upassword,jdbcType=VARCHAR},
+      </if>
+      <if test="usex != null" >
+        usex = #{usex,jdbcType=INTEGER},
+      </if>
+      <if test="uhead != null" >
+        uhead = #{uhead,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.model.User" >
+    update user
+    set uname = #{uname,jdbcType=VARCHAR},
+      uregtime = #{uregtime,jdbcType=DATE},
+      upassword = #{upassword,jdbcType=VARCHAR},
+      usex = #{usex,jdbcType=INTEGER},
+      uhead = #{uhead,jdbcType=VARCHAR}
+    where uid = #{uid,jdbcType=INTEGER}
+  </update>
+</mapper>

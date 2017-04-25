@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>欢迎</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"
+          rel="stylesheet" />
+
+</head>
+<body ms-controller="viewmodel">
+<form  th:id="input"  role="form" th:action="@{/hello/board}" th:method="post">
+    <div class="form-group">
+    <label for="inputusername" class="col-sm-2 control-label" ></label>
+    <div class="col-sm-10">
+        <p>用户名  <input type="text" class="form-control" id="inputusername" required="required" name="username"/></p>
+    </div>
+</div>
+    <div class="form-group">
+        <label for="inputMsg" class="col-sm-2 control-label"></label>
+        <div class="col-sm-10">
+           <p> 留言板<input type="text" class="form-control" id="inputMsg" required="required" name="content"/></p>
+        </div>
+    </div>
+<!--<input type="submit" value="" ms="@request"/>-->
+    <button type="button" class="btn btn-primary" style="margin: 10px;" ms-click="@request">留言</button>
+</form>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+
+            <td class="success">姓名</td>
+
+            <td class="active">内容</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ms-for="el in @datalist">
+
+            <td >{{el.name}}</td>
+
+            <td>{{el.msg}}</td>
+        </tr>
+        </tbody>
+    </table>
+
+
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="//cdn.bootcss.com/myscript/1.2.3/myscript.js"></script>
+<script src="//cdn.bootcss.com/avalon.js/2.0s/avalon.js"></script>
+
+<script th:inline="javascript">
+    var viewmodel = avalon.define({
+//id必须和页面上定义的ms-controller名字相同，否则无法控制页面
+        $id: "viewmodel",
+        datalist: {},
+
+
+        request: function () {
+
+            var name=$("#inputusername").val();
+            var msg=$("#inputMsg").val();
+            $.ajax({
+                type: "post",
+                url: "/hello/board",    //向springboot请求数据的url
+                data: {
+                    name:name,
+                    msg:msg
+                },
+                success: function (data) {
+                    $('button').removeClass("btn-primary").addClass("btn-success");
+
+                    viewmodel.datalist = data;
+
+
+                }
+            });
+        }
+    });
+
+</script>
+
+
+
+
+</body>
+</html>

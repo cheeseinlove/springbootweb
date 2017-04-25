@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.dao.TopicMapper" >
+  <resultMap id="BaseResultMap" type="com.example.model.Topic" >
+    <id column="tid" property="tid" jdbcType="INTEGER" />
+    <result column="tsid" property="tsid" jdbcType="INTEGER" />
+    <result column="tuid" property="tuid" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="replycount" property="replycount" jdbcType="INTEGER" />
+    <result column="publishtime" property="publishtime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    tid, tsid, tuid, title, content, replycount, publishtime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from topic
+    where tid = #{tid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from topic
+    where tid = #{tid,jdbcType=INTEGER}
+  </delete>
+  <select id="select" resultMap="BaseResultMap" resultType="com.example.model.Topic">
+    select * from topic
+
+  </select>
+  <insert id="insert" parameterType="com.example.model.Topic" >
+    insert into topic (tid, tsid, tuid, 
+      title, content, replycount, 
+      publishtime)
+    values (#{tid,jdbcType=INTEGER}, #{tsid,jdbcType=INTEGER}, #{tuid,jdbcType=INTEGER}, 
+      #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{replycount,jdbcType=INTEGER}, 
+      #{publishtime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.model.Topic" >
+    insert into topic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tid != null" >
+        tid,
+      </if>
+      <if test="tsid != null" >
+        tsid,
+      </if>
+      <if test="tuid != null" >
+        tuid,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="replycount != null" >
+        replycount,
+      </if>
+      <if test="publishtime != null" >
+        publishtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tid != null" >
+        #{tid,jdbcType=INTEGER},
+      </if>
+      <if test="tsid != null" >
+        #{tsid,jdbcType=INTEGER},
+      </if>
+      <if test="tuid != null" >
+        #{tuid,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="replycount != null" >
+        #{replycount,jdbcType=INTEGER},
+      </if>
+      <if test="publishtime != null" >
+        #{publishtime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.model.Topic" >
+    update topic
+    <set >
+      <if test="tsid != null" >
+        tsid = #{tsid,jdbcType=INTEGER},
+      </if>
+      <if test="tuid != null" >
+        tuid = #{tuid,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="replycount != null" >
+        replycount = #{replycount,jdbcType=INTEGER},
+      </if>
+      <if test="publishtime != null" >
+        publishtime = #{publishtime,jdbcType=DATE},
+      </if>
+    </set>
+    where tid = #{tid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.model.Topic" >
+    update topic
+    set tsid = #{tsid,jdbcType=INTEGER},
+      tuid = #{tuid,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      replycount = #{replycount,jdbcType=INTEGER},
+      publishtime = #{publishtime,jdbcType=DATE}
+    where tid = #{tid,jdbcType=INTEGER}
+  </update>
+</mapper>

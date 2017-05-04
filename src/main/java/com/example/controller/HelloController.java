@@ -30,7 +30,7 @@ import java.util.List;
  * @Comment
  */
 @Controller
-@RequestMapping("/hello")
+
 public class HelloController {
     static  int id = 2;
 private UserMapper userMapper;

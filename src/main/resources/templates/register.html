@@ -21,7 +21,7 @@
 <div class="container">
     <div class="row clearfix">
         <div class="col-md-12 column">
-            <form class="form-horizontal" role="form" th:method="post" th:action="@{/hello/reg}" th:id="loginForm">
+            <form class="form-horizontal" role="form" th:method="post"th:id="loginForm">
                 <div class="form-group">
                     <label for="regusername" class="col-sm-2 control-label" >用户名</label>
                     <div class="col-sm-10">
@@ -61,7 +61,7 @@
   var password=$("#regPassword").val();
         $.ajax({
             type: "post",
-            url: "/hello/register",    //向springboot请求数据的url
+            url: "/register",    //向springboot请求数据的url
             data: {
                 username:username,
                 password:password

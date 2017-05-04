@@ -1,10 +1,170 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <!--引入wangEditor.css-->
+    <link rel="stylesheet" type="text/css" href="/wangEditor-2.1.22/dist/css/wangEditor.min.css"/>
 
+    <script type="text/javascript" src="/wangEditor-2.1.22/dist/js/wangEditor.min.js"></script>
+    <title>欢迎</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"
+          rel="stylesheet" />
+
+</head>
+
+<body ms-controller="viewmodel">
+
+<div class="container theme-showcase" role="main">
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+
+</div>
+<table>
+<tbody><tr th:object="${topic}">
+    <td class="pls" rowspan="2">
+        <div id="favatar30025975" class="pls favatar">
+            <div class="pi">
+                <div class="authi"><a th:text="${author}" target="_blank" class="xw1"></a>
+                </div>
+            </div>
+            <div class="p_pop blk bui card_gender_1" id="userinfo30025975" style="display: none; margin-top: -11px;">
+                <div class="m z">
+                    <div id="userinfo30025975_ma"></div>
+                </div>
+            </div>
+            <div>
+                <div class="avatar">
+                    <a  class="avtm" target="_blank"><img src="http://bbs.uestc.edu.cn/uc_server/avatar.php?uid=96014&amp;size=middle"/></a>
+                </div>
+        </div>
+        </div>
+    </td>
+
+    <td class="plc">
+        <div class="pi">
+            <strong>
+                <a  id="postnum30025975" onclick="setCopy(this.href, '帖子地址复制成功');return false;">
+                    沙发</a>
+            </strong>
+            <div class="pti">
+                <div class="pdbt">
+                </div>
+                <div class="authi">
+
+                    <em id="authorposton30025975">发表于 <span  th:title="${topic.publishtime}">昨天&nbsp;</span></em>
+                    <span class="pipe">|</span>
+                </div>
+            </div>
+        </div>
+        <div class="pct">
+            <div class="pcb">
+        <div class="t_fsz">
+            <table cellspacing="0" cellpadding="0"><tbody><tr><td class="t_f" id="postmessage_30025975" ><a th:text="${topic.content}" />
+             </td></tr></tbody></table>
+
+
+        </div>
+        <div id="comment_30025975" class="cm">
+        </div>
+
+        <div id="post_rate_div_30025975"></div>
+    </div>
+    </div>
+
+    </td></tr>
+
+<tr id="_postposition30025975"></tr>
+<tr>
+    <td class="pls"></td>
+    <td class="plc" style="overflow:visible;">
+        <div class="po hin">
+            <div class="pob cl">
+                <em>
+
+                    <a class="fastre" href="forum.php?mod=post&amp;action=reply&amp;fid=25&amp;tid=1659936&amp;repquote=30025975&amp;extra=&amp;page=1" onclick="showWindow('reply', this.href)">回复</a>
+                    <a class="replyadd" href="forum.php?mod=misc&amp;action=postreview&amp;do=support&amp;tid=1659936&amp;pid=30025975&amp;hash=387bb746"
+                       onclick="ajaxmenu(this, 3000, 1, 0, '43', '');return false;" onmouseover="this.title = ($('review_support_30025975').innerHTML ? $('review_support_30025975').innerHTML : 0) + ' 人 支持'">支持 <span id="review_support_30025975"></span></a>
+                    <a class="replysubtract" href="forum.php?mod=misc&amp;action=postreview&amp;do=against&amp;tid=1659936&amp;pid=30025975&amp;hash=387bb746"
+                       onclick="ajaxmenu(this, 3000, 1, 0, '43', '');return false;" onmouseover="this.title = ($('review_against_30025975').innerHTML ? $('review_against_30025975').innerHTML : 0) + ' 人 反对'">反对 <span id="review_against_30025975"></span></a>
+                </em>
+                <script type="text/javascript" reload="1">checkmgcmn('post_30025975')</script>
+            </div>
+        </div>
+    </td>
+</tr>
+<tr class="ad">
+    <td class="pls">
+    </td>
+    <td class="plc">
+    </td>
+</tr>
+</tbody>
+</table>
+
+<!--
+回复框
+-->
+<div th:fragment="content" th:remove="tag">
+
+
+    <form method="POST" id="dataForm">
+        <div class="form-group form-group-lg">
+            <div class="input-group">
+                <div class="input-group-addon">标题：</div>
+                <input name="title" type="text" id="title" class="form-control" required="required" placeholder="请输入帖子标题" />
+            </div>
+        </div>
+
+        <div class="form-group form-group-lg">
+            <div class="input-group">
+                <div class="input-group-addon">内容：</div>
+                <textarea id="content" name="content" style="width:100%; min-height:150px;"></textarea>
+            </div>
+        </div>
+        <input type="hidden" name="token" th:value="${session.token}"/>
+
+        <button type="button" class="btn btn-primary submit-btn" onclick="request()"><i class="fa fa-check"></i> 确定提交</button>
+        <button type="button" class="btn btn-default" onclick="history.back(-1)"><i class="fa fa-chevron-left"></i> 返回上级</button>
+    </form>
+    <script type="text/javascript" src="/basic/article.js"></script>
+</div>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="//cdn.bootcss.com/avalon.js/2.0s/avalon.js"></script>
+<script th:inline="javascript">
+    var viewmodel = avalon.define({
+//id必须和页面上定义的ms-controller名字相同，否则无法控制页面
+        $id: "viewmodel",
+        datalist: {},
+
+
+        request: function () {
+            $.ajax({
+                type: "post",
+                url: "/hello/msg",    //向springboot请求数据的url
+                data: {},
+                success: function (data) {
+
+
+                    viewmodel.datalist = data;
+
+                    viewmodel.text = "数据请求成功，已渲染";
+                }
+            });
+        }
+    });
+
+</script>
 </body>
 </html>

@@ -110,22 +110,23 @@
         </div>
     </div>
 </div>
-<table class="table table-striped">
+<table class="table table-hover">
     <thead>
     <tr>
-        <td class="active">标题</td>
-        <td class="success">作者</td>
-        <td class="warning">回复数</td>
-
+        <td class="active" width="50%">标题</td>
+        <td class="success" width="15%">作者</td>
+        <td class="warning" width="15%">回复数</td>
+        <td class="danger" width="20%">发表时间</td>
     </tr>
     </thead>
     <tbody>
     <!--/*@thymesVar id="datalist" type="com"*/-->
     <tr th:each="el:${datalist}">
-        <td th:text="${el.title}"> </td>
+        <td><a th:text="${el.title}" th:href="'/campus/'+ ${el.tid} + '/topic'"/></td>
+        <!--<td style="cursor: pointer"  th:text="${el.title}">    <a th:href="/campus/${tid}/topic">4444 </a></td>-->
         <td th:text="${el.tuid}"></td>
         <td th:text="${el.replycount}">  </td>
-
+<td th:text="${el.publishtime}"> </td>
     </tr>
     </tbody>
 </table>
@@ -136,7 +137,7 @@
         <div class="form-group form-group-lg">
             <div class="input-group">
                 <div class="input-group-addon">标题：</div>
-                <input name="title" type="text" id="title" class="form-control"  placeholder="请输入帖子标题" />
+                <input name="title" type="text" id="title" class="form-control" required="required" placeholder="请输入帖子标题" />
             </div>
         </div>
 
@@ -190,11 +191,11 @@
 </script>
 <script>
     function login(){
-        window.location.href='hello/login';
+        window.location.href='login';
     }
 
     function reg(){
-        window.location.href='hello/register';
+        window.location.href='register';
     }
 </script>
 

@@ -5,17 +5,17 @@ import java.util.Date;
 public class Topic {
     private Integer tid;
 
-    private Integer tsid;
+    private Integer tsid;//发帖的板块id
 
-    private Integer tuid;
+    private Integer tuid;//发帖人
 
-    private String title;
+    private String title;//标题
 
-    private String content;
+    private String content;//内容
 
-    private Integer replycount;
+    private Integer replycount;//回复数
 
-    private Date publishtime;
+    private Date publishtime;//发帖时间
 
     public Integer getTid() {
         return tid;

@@ -169,9 +169,11 @@
 
 
         function request() {
+            var editor =new wangEditor("content")
+            editor.create();
 
             var title=$("#title").val();
-            var content=$("#content").val();
+            var content=editor.$txt.text();
             $.ajax({
                 type: "post",
                 url: "/campus",    //向springboot请求数据的url

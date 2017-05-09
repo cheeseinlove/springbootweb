@@ -3,7 +3,7 @@ package com.example.model;
 import java.util.Date;
 
 public class Topic {
-    private Integer tid;
+    private Integer tid;//主键
 
     private Integer tsid;//发帖的板块id
 

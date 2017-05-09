@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.dao.StudentDao;
+import com.example.model.Reply;
 import com.example.model.Student;
 import com.example.model.Topic;
 import com.example.model.User;
@@ -23,6 +24,7 @@ import java.util.List;
 @Controller
 public class TestController {
 static  int i = 3;
+static  int rid = 1;
 /*成电校园
 
  */
@@ -67,10 +69,44 @@ static  int i = 3;
     Topic topic=sqlSession.selectOne(gettopic,tid);
 int uid=topic.getTuid();//找到发帖人
     model.addAttribute("topic",topic);
+//    model.addAttribute("content",topic.getContent());
 String getuser="com.example.dao.UserMapper.selectByPrimaryKey";
 User user=sqlSession.selectOne(getuser,uid);
 model.addAttribute("author",user.getUname());
+String addrep="com.example.dao.ReplyMapper.selectall";
+List<Reply>replies=sqlSession.selectList(addrep,tid);//筛选回复对应的帖子
+model.addAttribute("replylist",replies);
     return "topic";
+}
+@RequestMapping(value ="/campus/{tid}/topic",method = RequestMethod.POST)
+@ResponseBody
+    public String viewtopic(@PathVariable(value = "tid")int tid,Model model,String content){
+    SqlSession sqlSession=MyBatisUtil.getSqlSession();
+//回复一次回复数加一
+        String findtopic="com.example.dao.TopicMapper.selectByPrimaryKey";
+        Topic topic=sqlSession.selectOne(findtopic,tid);
+        topic.setReplycount(rid);
+        sqlSession.update("com.example.dao.TopicMapper.updateByPrimaryKeySelective",topic);
+        sqlSession.commit();
+
+    Reply reply=new Reply();
+    reply.setContent(content);
+    reply.setTid(tid);
+    reply.setRid(rid++);
+
+    Date sqlDate = new java.sql.Date(new Date().getTime());
+    reply.setTime(sqlDate);
+
+    String addreply="com.example.dao.ReplyMapper.insertSelective";
+    sqlSession.insert(addreply,reply);
+    String addrep="com.example.dao.ReplyMapper.selectall";
+    List<Reply>replies=sqlSession.selectList(addrep);
+    model.addAttribute("replylist",replies);
+    sqlSession.commit();
+//    System.out.println("passed"+content);
+        return "ok";
+
+
 }
 
 

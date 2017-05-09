@@ -2,12 +2,14 @@
 <html lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
+
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <meta name="description" content="" />
     <meta name="author" content="" />
+
     <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <!--引入wangEditor.css-->
     <link rel="stylesheet" type="text/css" href="/wangEditor-2.1.22/dist/css/wangEditor.min.css"/>
@@ -18,8 +20,102 @@
     <!-- Bootstrap core CSS -->
     <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"
           rel="stylesheet" />
+    <style type="text/css">
+        body{
+            background-color: #f5f5f5;
+        }
+        #container{
+            width:940px;
+            margin:20px auto;
+            border:solid 2px #aaa;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+        .top{
+            margin:20px 20px;
+        }
+        .pic{
+            float:right;
+        }
+        .txt{
+            margin:10px 20px;
+            width:900px;
+            height:auto;
+            border:solid 1px #aaa;
+            border-radius: 5px;
+            background-color: #f5f5f5;
+        }
+        .like{
+            margin-left:890px;
+            width:30px;
+            height:30px;
+            display:inline;
+        }
+        .num{
+            float:right;
+        }
+        #demo,#demo1{
+            float: right;
+            with:60px;
+            height: 60px;
+            border:solid 1px black;
+        }
 
+        #reply{
+            margin:0px auto;
+            width:940px;
+            background-color: #fff;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+            box-shadow: 0 1px 1px rgba(0,0,0,.05);
+            border-bottom:solid 1px #C5DEF5;
+        }
+        .heading{
+            margin:20px auto;
+            width:940px;
+            padding: 10px 15px;
+            /*border-bottom: 1px solid transparent;*/
+            border_bottom:1px solid black;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            background-color:#C5DEF5;
+            margin-bottom:10px;
+        }
+        .avatar {
+            width: 50px;
+            height: 50px;
+        }
+    </style>
+    <script type="text/javascript">
+        var i = 0;
+        function add(){
+            i++;
+            document.getElementById("s").innerHTML = i;
+        }
+    </script>
 </head>
+<body>
+<img src="#" id="demo"/>
+<img src="#" id="demo1"/>
+<div id="container" th:object="${topic}">
+    <div class="top">
+        <h1 th:text="${topic.title}"></h1>
+        <span>发布自</span>
+        <a href="#" th:text="${author}"></a>
+        <img class="pic" src="#"/>
+    </div>
+    <hr/>
+    <div class="txt">
+		<pre th:text="${topic.content}">
+
+			  </pre>
+    </div>
+    <img th:src="@{/image/yesblue.png}" class="like" onclick="add()"/>
+    <span class="num" id="s" />
+</div>
+
+</body>
 
 <body ms-controller="viewmodel">
 
@@ -27,111 +123,54 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
 
 </div>
-<table>
-<tbody><tr th:object="${topic}">
-    <td class="pls" rowspan="2">
-        <div id="favatar30025975" class="pls favatar">
-            <div class="pi">
-                <div class="authi"><a th:text="${author}" target="_blank" class="xw1"></a>
-                </div>
-            </div>
-            <div class="p_pop blk bui card_gender_1" id="userinfo30025975" style="display: none; margin-top: -11px;">
-                <div class="m z">
-                    <div id="userinfo30025975_ma"></div>
-                </div>
-            </div>
-            <div>
-                <div class="avatar">
-                    <a  class="avtm" target="_blank"><img src="http://bbs.uestc.edu.cn/uc_server/avatar.php?uid=96014&amp;size=middle"/></a>
-                </div>
-        </div>
-        </div>
-    </td>
+<!--
+回复的内容-->
+<div class="heading" th:text="${topic.replycount}+'条回复'">1条回复</div>
+<div th:each="reply:${replylist}" id="reply">
 
-    <td class="plc">
-        <div class="pi">
-            <strong>
-                <a  id="postnum30025975" onclick="setCopy(this.href, '帖子地址复制成功');return false;">
-                    沙发</a>
-            </strong>
-            <div class="pti">
-                <div class="pdbt">
+    <div class="body">
+        <div class="media">
+            <div class="media-left">
+                <a href="#"><img src="https://avatars2.githubusercontent.com/u/7227156?v=3" class="avatar" alt=""/></a>
+            </div>
+            <div class="media-body">
+                <div class="media-heading gray">
+                    <a href="#" th:text="${replyer}">test</a>
+                    <p th:text="${reply.time}" style="display:inline-block;">时间</p>
                 </div>
-                <div class="authi">
-
-                    <em id="authorposton30025975">发表于 <span  th:title="${topic.publishtime}">昨天&nbsp;</span></em>
-                    <span class="pipe">|</span>
+                <div class="topic-comment-content">
+                    <p th:text="${reply.content}">test</p>
                 </div>
             </div>
         </div>
-        <div class="pct">
-            <div class="pcb">
-        <div class="t_fsz">
-            <table cellspacing="0" cellpadding="0"><tbody><tr><td class="t_f" id="postmessage_30025975" ><a th:text="${topic.content}" />
-             </td></tr></tbody></table>
-
-
-        </div>
-        <div id="comment_30025975" class="cm">
-        </div>
-
-        <div id="post_rate_div_30025975"></div>
     </div>
-    </div>
+</div>
 
-    </td></tr>
 
-<tr id="_postposition30025975"></tr>
-<tr>
-    <td class="pls"></td>
-    <td class="plc" style="overflow:visible;">
-        <div class="po hin">
-            <div class="pob cl">
-                <em>
 
-                    <a class="fastre" href="forum.php?mod=post&amp;action=reply&amp;fid=25&amp;tid=1659936&amp;repquote=30025975&amp;extra=&amp;page=1" onclick="showWindow('reply', this.href)">回复</a>
-                    <a class="replyadd" href="forum.php?mod=misc&amp;action=postreview&amp;do=support&amp;tid=1659936&amp;pid=30025975&amp;hash=387bb746"
-                       onclick="ajaxmenu(this, 3000, 1, 0, '43', '');return false;" onmouseover="this.title = ($('review_support_30025975').innerHTML ? $('review_support_30025975').innerHTML : 0) + ' 人 支持'">支持 <span id="review_support_30025975"></span></a>
-                    <a class="replysubtract" href="forum.php?mod=misc&amp;action=postreview&amp;do=against&amp;tid=1659936&amp;pid=30025975&amp;hash=387bb746"
-                       onclick="ajaxmenu(this, 3000, 1, 0, '43', '');return false;" onmouseover="this.title = ($('review_against_30025975').innerHTML ? $('review_against_30025975').innerHTML : 0) + ' 人 反对'">反对 <span id="review_against_30025975"></span></a>
-                </em>
-                <script type="text/javascript" reload="1">checkmgcmn('post_30025975')</script>
-            </div>
-        </div>
-    </td>
-</tr>
-<tr class="ad">
-    <td class="pls">
-    </td>
-    <td class="plc">
-    </td>
-</tr>
-</tbody>
-</table>
 
 <!--
 回复框
 -->
-<div th:fragment="content" th:remove="tag">
+<div th:fragment="content" th:remove="tag" id="div1">
 
 
-    <form method="POST" id="dataForm">
+    <form method="POST" id="div">
+        <!--<div class="form-group form-group-lg">-->
+            <!--<div class="input-group">-->
+                <!--<div class="input-group-addon">标题：</div>-->
+                <!--<input name="title" type="text" id="title" class="form-control" required="required" placeholder="请输入帖子标题" />-->
+            <!--</div>-->
+        <!--</div>-->
         <div class="form-group form-group-lg">
             <div class="input-group">
-                <div class="input-group-addon">标题：</div>
-                <input name="title" type="text" id="title" class="form-control" required="required" placeholder="请输入帖子标题" />
-            </div>
-        </div>
-
-        <div class="form-group form-group-lg">
-            <div class="input-group">
-                <div class="input-group-addon">内容：</div>
+                <div class="input-group-addon">回复内容：</div>
                 <textarea id="content" name="content" style="width:100%; min-height:150px;"></textarea>
             </div>
         </div>
         <input type="hidden" name="token" th:value="${session.token}"/>
 
-        <button type="button" class="btn btn-primary submit-btn" onclick="request()"><i class="fa fa-check"></i> 确定提交</button>
+        <button type="button" class="btn btn-primary submit-btn" id="btn1" onclick="reply()"><i class="fa fa-check"></i> 确定回复</button>
         <button type="button" class="btn btn-default" onclick="history.back(-1)"><i class="fa fa-chevron-left"></i> 返回上级</button>
     </form>
     <script type="text/javascript" src="/basic/article.js"></script>
@@ -141,30 +180,37 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script src="//cdn.bootcss.com/avalon.js/2.0s/avalon.js"></script>
+
 <script th:inline="javascript">
-    var viewmodel = avalon.define({
-//id必须和页面上定义的ms-controller名字相同，否则无法控制页面
-        $id: "viewmodel",
-        datalist: {},
 
 
-        request: function () {
-            $.ajax({
-                type: "post",
-                url: "/hello/msg",    //向springboot请求数据的url
-                data: {},
-                success: function (data) {
+    function reply() {
+      var editor =new wangEditor("content")
+      editor.create();
+            // 获取编辑器区域完整html代码
+//            var html = editor.$txt.html();
+//        var content = $("#content").val();
+            // 获取编辑器纯文本内容
+         var content = editor.$txt.text();
+//
+//            // 获取格式化后的纯文本
+//            var content = editor.$txt.formatText();
 
+//        var content=$("#content").val();
+        $.ajax({
+            type: "post",
+//            url: url,    //向springboot请求数据的url
+//            cashe: false,
+            data: {
+                content:content
 
-                    viewmodel.datalist = data;
+            },
+            success: function (data) {
+                window.location.href='topic'
 
-                    viewmodel.text = "数据请求成功，已渲染";
-                }
-            });
-        }
-    });
-
+            }
+        });
+    }
 </script>
 </body>
 </html>

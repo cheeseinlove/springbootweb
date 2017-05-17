@@ -7,13 +7,13 @@ import com.example.model.Topic;
 import com.example.model.User;
 import com.example.util.MyBatisUtil;
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,30 +22,41 @@ import java.util.List;
  * Created by 讯 on 2017/4/7.
  */
 @Controller
+
 public class TestController {
 static  int i = 3;
 static  int rid = 1;
+
 /*成电校园
 
  */
     @RequestMapping(value = "/campus",method = RequestMethod.GET)
-    public String hello(Model model) {
+    public String hello(Model model, HttpServletRequest request) {
         SqlSession sqlSession = MyBatisUtil.getSqlSession();
         String stm="com.example.dao.TopicMapper.select";
         List<Topic>list=sqlSession.selectList(stm);
         model.addAttribute("datalist",list);
 
+//        System.out.print("----------------"+ request.getSession().getAttribute("login_account"));
+
         return "campus";
     }
+//    发帖
     @RequestMapping(value = "/campus",method = RequestMethod.POST)
-@ResponseBody
-    public String topicList(String title,String content,Model model){
+    @ResponseBody
+    public String topicList(String title, String content, Model model,HttpServletRequest request){
+if (request.getSession().getAttribute("currentuser")==null){
+    System.out.print("----------------"+ request.getSession().getAttribute("currentuser"));
+    return "wrong";
+}
+User cuurrentuser= (User) request.getSession().getAttribute("currentuser");
         Topic topic=new Topic();
         topic.setTid(i++);
         topic.setTsid(1);
         Date sqlDate = new java.sql.Date(new Date().getTime());
         topic.setPublishtime(sqlDate);
         topic.setContent(content);
+        topic.setTuid(cuurrentuser.getUid());
         topic.setTitle(title);
         SqlSession sqlSession = MyBatisUtil.getSqlSession();
         String statement = "com.example.dao.TopicMapper.insert";
@@ -80,7 +91,12 @@ model.addAttribute("replylist",replies);
 }
 @RequestMapping(value ="/campus/{tid}/topic",method = RequestMethod.POST)
 @ResponseBody
-    public String viewtopic(@PathVariable(value = "tid")int tid,Model model,String content){
+    public String viewtopic(@PathVariable(value = "tid")int tid,Model model,String content,HttpServletRequest request){
+    if (request.getSession().getAttribute("currentuser")==null){
+        System.out.print("----------------"+ request.getSession().getAttribute("currentuser"));
+        return "wrong";
+    }
+    User cuurrentuser= (User) request.getSession().getAttribute("currentuser");
     SqlSession sqlSession=MyBatisUtil.getSqlSession();
 //回复一次回复数加一
         String findtopic="com.example.dao.TopicMapper.selectByPrimaryKey";
@@ -93,7 +109,7 @@ model.addAttribute("replylist",replies);
     reply.setContent(content);
     reply.setTid(tid);
     reply.setRid(rid++);
-
+reply.setUid(cuurrentuser.getUid());
     Date sqlDate = new java.sql.Date(new Date().getTime());
     reply.setTime(sqlDate);
 

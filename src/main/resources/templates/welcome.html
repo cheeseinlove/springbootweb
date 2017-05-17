@@ -3,89 +3,68 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
-    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
-    <link th:href="@{/bootstrap/css/bootstrap-theme.min.css}" rel="stylesheet"/>
+    <link href="/bootstrap/css/bootstrap.css" rel="stylesheet"/>
+    <link href="/bootstrap/css/bootstrap-theme.css" rel="stylesheet"/>
+    <!--<link href="/css/templatemo-style.css" rel="stylesheet" />-->
     <meta charset="UTF-8"/>
     <title>Title</title>
+    <style type="text/css">
+
+
+
+        </style>
 </head>
 <body>
-<div class="panel panel-primary">
-    <nav class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
+<div class="tm-header">
+    <div class="container-fluid">
+        <div class="tm-header-inner">
+            <a href="#" class="navbar-brand tm-site-name">欢迎来到ebbs</a>
 
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">Test</a>
-            </div>
-            <div>
-                <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            校园服务
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">jmeter</a></li>
-                            <li><a href="#">EJB</a></li>
-                            <li><a href="#">Jasper Report</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">分离的链接</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">另一个分离的链接</a></li>
+            <!-- navbar -->
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <ul class="nav nav-pills" style="display: inline-block; color: white;" >
+                            <li class="active">
+                                <a href="#">首页</a>
+                            </li>
+                            <li>
+                                <a href="#">成电校园</a>
+                            </li>
+                            <li >
+                                <a href="#">科技交流</a>
+                            </li>
+                            <li >
+                                <a href="#">就业创业</a>
+                            </li>
                         </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            论坛服务
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">jmeter</a></li>
-                            <li><a href="#">EJB</a></li>
-                            <li><a href="#">Jasper Report</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">分离的链接</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">另一个分离的链接</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            成电校园
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">jmeter</a></li>
-                            <li><a href="#">EJB</a></li>
-                            <li><a href="#">Jasper Report</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">分离的链接</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">另一个分离的链接</a></li>
-                        </ul>
-                    </li>
-                </ul>
+                        <div class="form-group" style="display: inline-block">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button type="submit" class="btn btn-default" onclick="login()" >登录</button>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button type="submit" class="btn btn-default" onclick="reg()" >注册</button>
+                                        </div>
+                                    </td>
 
+                                </tr>
+                            </table>
+
+                        </div >
+                    </div>
+                </div>
             </div>
 
         </div>
-    </nav>
+    </div>
 </div>
-<div class="form-group">
-    <table>
-        <tr>
-            <td>
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-default" onclick="reg()" >注册</button>
-                </div>
-            </td>
-            <td>
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-default" onclick="login()" >登录</button>
-                </div>
-            </td>
-        </tr>
-    </table>
-</div >
+
+<img th:src="@{/image/tm-home-img.jpg}" width="100%" height="500" />
 <div class="container">
     <div class="row clearfix">
         <div class="col-md-12 column">
@@ -98,10 +77,12 @@
                                成电校园
                             </h3>
                             <p>
-                                Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                                有一种回忆，也许我们只能从发黄的相片中找寻。
+                                时光义无反顾地流逝，唯有这份对母校的情谊历久弥新。
+                                珍惜美好的大学时光，校园青春点滴，你我共同记忆。
                             </p>
                             <p>
-                                <a class="btn btn-primary" href="/campus">Action</a> <a class="btn" href="#">Action</a>
+                                <a class="btn btn-primary" href="/campus">立即进入</a> <a class="btn" href="#">立即进入</a>
                             </p>
                         </div>
                     </div>
@@ -113,11 +94,13 @@
                             <h3>
                                科技交流
                             </h3>
-                            <p>
-                                Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                            <p>技术只是解决问题的选择，而不是解决问题的根本
+                                Stay Hungry, Stay Foolish
+                                Die Luft der Freiheit weht
+                                应景干货长文，不读不是程序猿：提问的智慧
                             </p>
                             <p>
-                                <a class="btn btn-primary" href="/hello">Action</a> <a class="btn" href="#">Action</a>
+                                <a class="btn btn-primary" href="/hello">立即进入</a> <a class="btn" href="#">立即进入</a>
                             </p>
                         </div>
                     </div>
@@ -127,13 +110,13 @@
                         <img alt="300x200" th:src="@{/image/fun.jpg}" />
                         <div class="caption">
                             <h3>
-                              休闲娱乐
+                              就业创业
                             </h3>
                             <p>
-                                Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+                                人世沉浮如电光石火，盛衰起伏，变幻难测；如果你有天才，勤奋则使你如虎添翼；如果你没有天才，勤奋将使你赢得一切。
                             </p>
                             <p>
-                                <a class="btn btn-primary" href="/hello">Action</a> <a class="btn" href="#">Action</a>
+                                <a class="btn btn-primary" href="/hello">立即进入</a> <a class="btn" href="#">立即进入</a>
                             </p>
                         </div>
                     </div>

@@ -13,13 +13,14 @@
     <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <!--引入wangEditor.css-->
     <link rel="stylesheet" type="text/css" href="/wangEditor-2.1.22/dist/css/wangEditor.min.css"/>
+    <link href="/bootstrap/css/bootstrap.css" rel="stylesheet"/>
+    <link href="/bootstrap/css/bootstrap-theme.css" rel="stylesheet"/>
 
+    <meta charset="UTF-8"/>
     <script type="text/javascript" src="/wangEditor-2.1.22/dist/js/wangEditor.min.js"></script>
     <title>欢迎</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"
-          rel="stylesheet" />
+
     <style type="text/css">
         body{
             background-color: #f5f5f5;
@@ -95,9 +96,76 @@
         }
     </script>
 </head>
+
+
+<div class="tm-header">
+    <div class="container-fluid">
+        <div class="tm-header-inner">
+            <a href="#" class="navbar-brand tm-site-name">欢迎来到ebbs</a>
+
+            <!-- navbar -->
+            <div class="container-fluid">
+                <div class="row-fluid1">
+                    <div class="span12">
+                        <ul class="nav nav-pills" style="display: inline-block; color: white;" >
+                            <li class="active">
+                                <a href="#">首页</a>
+                            </li>
+                            <li>
+                                <a href="#">成电校园</a>
+                            </li>
+                            <li >
+                                <a href="#">科技交流</a>
+                            </li>
+                            <li >
+                                <a href="#">就业创业</a>
+                            </li>
+                        </ul>
+                        <div class="form-group1" style="display: inline-block">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button type="submit" class="btn btn-default" onclick="login()" >登录</button>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button type="submit" class="btn btn-default" onclick="reg()" >注册</button>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                            </table>
+
+                        </div >
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <body>
-<img src="#" id="demo"/>
-<img src="#" id="demo1"/>
+<!--<div class="form-group">-->
+    <!--<table>-->
+        <!--<tr>-->
+            <!--<td>-->
+                <!--<div class="col-sm-offset-2 col-sm-10" >-->
+                    <!--<button  type="submit" class="btn btn-default"  onclick="reg()" >注册</button>-->
+                <!--</div>-->
+            <!--</td>-->
+            <!--<td>-->
+                <!--<div class="col-sm-offset-2 col-sm-10">-->
+                    <!--<button   type="submit" class="btn btn-default" onclick="login()" >登录</button>-->
+                <!--</div>-->
+            <!--</td>-->
+        <!--</tr>-->
+    <!--</table>-->
+<!--</div >-->
+<!--<img src="#" id="demo"/>-->
+<!--<img src="#" id="demo1"/>-->
 <div id="container" th:object="${topic}">
     <div class="top">
         <h1 th:text="${topic.title}"></h1>
@@ -206,8 +274,13 @@
 
             },
             success: function (data) {
-                window.location.href='topic'
-
+                if (data=="ok") {
+                    window.location.href = 'topic'
+                }
+                if (data=="wrong"){
+                    alert("请先登录然后回复");
+                    window.location.href='login'
+                }
             }
         });
     }

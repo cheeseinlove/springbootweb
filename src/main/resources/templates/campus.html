@@ -9,6 +9,9 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="/bootstrap/css/bootstrap.css" rel="stylesheet"/>
+    <link href="/bootstrap/css/bootstrap-theme.css" rel="stylesheet"/>
+    <!--<link href="/css/templatemo-style.css" rel="stylesheet" />-->
     <script type="text/javascript" src="/basic/bootstrapValidator.js"></script>
     <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <!--引入wangEditor.css-->
@@ -18,93 +21,65 @@
     <title>成电校园</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css"
-          rel="stylesheet" />
+    <!--<link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" />-->
 
 </head>
 
 <body ms-controller="viewmodel">
-<div class="panel panel-primary">
-    <nav class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
 
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">Test</a>
-            </div>
-            <div>
-                <ul class="nav navbar-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            校园服务
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">jmeter</a></li>
-                            <li><a href="#">EJB</a></li>
-                            <li><a href="#">Jasper Report</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">分离的链接</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">另一个分离的链接</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            论坛服务
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">jmeter</a></li>
-                            <li><a href="#">EJB</a></li>
-                            <li><a href="#">Jasper Report</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">分离的链接</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">另一个分离的链接</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            成电校园
-                            <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">jmeter</a></li>
-                            <li><a href="#">EJB</a></li>
-                            <li><a href="#">Jasper Report</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">分离的链接</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">另一个分离的链接</a></li>
-                        </ul>
-                    </li>
-                </ul>
+<div class="tm-header">
+    <div class="container-fluid">
+        <div class="tm-header-inner">
+            <a href="#" class="navbar-brand tm-site-name">欢迎来到ebbs</a>
 
+            <!-- navbar -->
+            <div class="container-fluid">
+                <div class="row-fluid1">
+                    <div class="span12">
+                        <ul class="nav nav-pills" style="display: inline-block; color: white;" >
+                            <li class="active">
+                                <a href="#">首页</a>
+                            </li>
+                            <li>
+                                <a href="#">成电校园</a>
+                            </li>
+                            <li >
+                                <a href="#">科技交流</a>
+                            </li>
+                            <li >
+                                <a href="#">就业创业</a>
+                            </li>
+                        </ul>
+                        <div class="form-group1" style="display: inline-block">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button type="submit" class="btn btn-default" onclick="login()" >登录</button>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button type="submit" class="btn btn-default" onclick="reg()" >注册</button>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                            </table>
+
+                        </div >
+                    </div>
+                </div>
             </div>
 
         </div>
-    </nav>
+    </div>
 </div>
-<div class="form-group">
-    <table>
-        <tr>
-            <td>
-                <div class="col-sm-offset-2 col-sm-10" >
-                    <button type="submit" class="btn btn-default"  onclick="reg()" >注册</button>
-                </div>
-            </td>
-            <td>
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-default" onclick="login()" >登录</button>
-                </div>
-            </td>
-        </tr>
-    </table>
-</div >
+
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span12">
-            <h3 class="text-center muted">
+            <h3 class="text-center muted textsize">
               成电校园
             </h3>
         </div>
@@ -124,7 +99,7 @@
     <tr th:each="el:${datalist}">
         <td><a th:text="${el.title}" th:href="'/campus/'+ ${el.tid} + '/topic'"/></td>
         <!--<td style="cursor: pointer"  th:text="${el.title}">    <a th:href="/campus/${tid}/topic">4444 </a></td>-->
-        <td th:text="${el.tuid}"></td>
+        <td th:text="${author}"></td>
         <td th:text="${el.replycount}">  </td>
 <td th:text="${el.publishtime}"> </td>
     </tr>
@@ -159,8 +134,8 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script src="//cdn.bootcss.com/myscript/1.2.3/myscript.js"></script>
-<script src="//cdn.bootcss.com/avalon.js/2.0s/avalon.js"></script>
+<!--<script src="//cdn.bootcss.com/myscript/1.2.3/myscript.js"></script>-->
+
 
 <script th:inline="javascript">
 
@@ -183,8 +158,13 @@
 
                 },
                 success: function (data) {
-                 window.location.href='campus'
-
+                    if(data=="ok") {
+                        window.location.href = 'campus';
+                    }
+                    if (data=="wrong"){
+                        alert("您未登录请登录");
+                    window.location.href='/login';
+                    }
                 }
             });
         }

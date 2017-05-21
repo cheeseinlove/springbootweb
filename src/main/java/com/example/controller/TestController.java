@@ -6,11 +6,14 @@ import com.example.model.Student;
 import com.example.model.Topic;
 import com.example.model.User;
 import com.example.util.MyBatisUtil;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -31,10 +34,13 @@ static  int rid = 1;
 
  */
     @RequestMapping(value = "/campus",method = RequestMethod.GET)
-    public String hello(Model model, HttpServletRequest request) {
+    public String hello(Model model, ModelAndView mv) {
+//        分页插件pagehelper使用
+        PageHelper.startPage(1, 10);
         SqlSession sqlSession = MyBatisUtil.getSqlSession();
         String stm="com.example.dao.TopicMapper.select";
         List<Topic>list=sqlSession.selectList(stm);
+        PageInfo<Topic> p=new PageInfo<Topic>(list);
         model.addAttribute("datalist",list);
 
 //        System.out.print("----------------"+ request.getSession().getAttribute("login_account"));

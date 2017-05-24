@@ -34,16 +34,29 @@ static  int rid = 1;
 
  */
     @RequestMapping(value = "/campus",method = RequestMethod.GET)
-    public String hello(Model model, ModelAndView mv) {
+    public String hello(Model model,@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize) {
 //        分页插件pagehelper使用
-        PageHelper.startPage(1, 10);
+      PageHelper.startPage(pageNum, pageSize);
         SqlSession sqlSession = MyBatisUtil.getSqlSession();
         String stm="com.example.dao.TopicMapper.select";
         List<Topic>list=sqlSession.selectList(stm);
+        System.out.print("list.size--------- "+ list.size());
         PageInfo<Topic> p=new PageInfo<Topic>(list);
-        model.addAttribute("datalist",list);
+        //获得当前页
+        model.addAttribute("pageNum", p.getPageNum());
+        //获得一页显示的条数
+        model.addAttribute("pageSize",p.getPageSize());
+        //是否是第一页
+        model.addAttribute("isFirstPage", p.isIsFirstPage());
+        //获得总页数
+        model.addAttribute("totalPages",p.getPages());
+        //是否是最后一页
+        model.addAttribute("isLastPage",p.isIsLastPage());
+        System.out.print("-----pagesize:"+p.getPageSize()+"\n");
+        System.out.print("-----pagenum:"+p.getPageNum()+"\n");
+     model.addAttribute("datalist",list);
+        model.addAttribute("page",p);
 
-//        System.out.print("----------------"+ request.getSession().getAttribute("login_account"));
 
         return "campus";
     }
@@ -80,19 +93,41 @@ User cuurrentuser= (User) request.getSession().getAttribute("currentuser");
      */
 
 @RequestMapping(value ="/campus/{tid}/topic",method = RequestMethod.GET)
-    public String viewtopic(@PathVariable(value = "tid")int tid ,Model model){
+    public String viewtopic(@PathVariable(value = "tid")int tid ,Model model,@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize){
+    PageHelper.startPage(pageNum, pageSize);
+    String addrep="com.example.dao.ReplyMapper.selectall";
     SqlSession sqlSession=MyBatisUtil.getSqlSession();
+    List<Reply>replies=sqlSession.selectList(addrep,tid);//筛选回复对应的帖子
     String gettopic="com.example.dao.TopicMapper.selectByPrimaryKey";
     Topic topic=sqlSession.selectOne(gettopic,tid);
-int uid=topic.getTuid();//找到发帖人
+  int uid=topic.getTuid();//找到发帖人
     model.addAttribute("topic",topic);
 //    model.addAttribute("content",topic.getContent());
 String getuser="com.example.dao.UserMapper.selectByPrimaryKey";
 User user=sqlSession.selectOne(getuser,uid);
 model.addAttribute("author",user.getUname());
-String addrep="com.example.dao.ReplyMapper.selectall";
-List<Reply>replies=sqlSession.selectList(addrep,tid);//筛选回复对应的帖子
+
+
+    System.out.print("-----replies:"+replies.size()+"\n");
+
+    PageInfo<Reply> p=new PageInfo<Reply>(replies);
+
+    //获得当前页
+    model.addAttribute("pageNum", p.getPageNum());
+    //获得一页显示的条数
+
+    model.addAttribute("pageSize",p.getPageSize());
+    //是否是第一页
+    model.addAttribute("isFirstPage", p.isIsFirstPage());
+    //获得总页数
+    model.addAttribute("totalPages",p.getPages());
+    //是否是最后一页
+    model.addAttribute("isLastPage",p.isIsLastPage());
+    System.out.print("-----pagesize:"+p.getPageSize()+"\n");
+    System.out.print("-----pagenum:"+p.getPageNum()+"\n");
 model.addAttribute("replylist",replies);
+model.addAttribute("page",p);
+
     return "topic";
 }
 @RequestMapping(value ="/campus/{tid}/topic",method = RequestMethod.POST)

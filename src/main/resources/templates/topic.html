@@ -148,24 +148,7 @@
 </div>
 
 <body>
-<!--<div class="form-group">-->
-    <!--<table>-->
-        <!--<tr>-->
-            <!--<td>-->
-                <!--<div class="col-sm-offset-2 col-sm-10" >-->
-                    <!--<button  type="submit" class="btn btn-default"  onclick="reg()" >注册</button>-->
-                <!--</div>-->
-            <!--</td>-->
-            <!--<td>-->
-                <!--<div class="col-sm-offset-2 col-sm-10">-->
-                    <!--<button   type="submit" class="btn btn-default" onclick="login()" >登录</button>-->
-                <!--</div>-->
-            <!--</td>-->
-        <!--</tr>-->
-    <!--</table>-->
-<!--</div >-->
-<!--<img src="#" id="demo"/>-->
-<!--<img src="#" id="demo1"/>-->
+
 <div id="container" th:object="${topic}">
     <div class="top">
         <h1 th:text="${topic.title}"></h1>
@@ -213,7 +196,32 @@
         </div>
     </div>
 </div>
+<nav style="text-align: center" >
+    <ul class="pagination">
+        <li><a href="">&laquo;</a></li>
 
+        <li>
+            <a th:if="${not isFirstPage}" th:href="@{${'/campus/'}+${topic.tid}+${'/topic'}(pageNum=${pageNum-1},pageSize=${pageSize})}">Previous</a>
+            <a th:if="${isFirstPagee}" href="javascript:void(0);">Previous</a>
+        </li>
+
+        <li th:each="pageNo : ${#numbers.sequence(1, totalPages)}">
+            <a th:if="${pageNum eq pageNo}" href="javascript:void(0);">
+                <span th:text="${pageNo}"></span>
+            </a>
+
+            <a th:if="${not (pageNum eq pageNo)}" th:href="@{${'/campus/'}+${topic.tid}+${'/topic'}(pageNum=${pageNo},size=${pageSize})}">
+                <span th:text="${pageNo}"></span>
+            </a>
+        </li>
+        <li>
+            <a th:if="${not isLastPage}" th:href="@{${'/campus/'}+${topic.tid}+${'/topic'}(pageNum=${pageNum+1},size=${pageSize})}">Next</a>
+            <a th:if="${isLastPage}" href="javascript:void(0);">Next</a>
+        </li>
+
+        <li><a href="">&raquo;</a></li>
+    </ul>
+</nav>
 
 
 
@@ -236,7 +244,7 @@
                 <textarea id="content" name="content" style="width:100%; min-height:150px;"></textarea>
             </div>
         </div>
-        <input type="hidden" name="token" th:value="${session.token}"/>
+        <!--<input type="hidden" name="token" th:value="${session.token}"/>-->
 
         <button type="button" class="btn btn-primary submit-btn" id="btn1" onclick="reply()"><i class="fa fa-check"></i> 确定回复</button>
         <button type="button" class="btn btn-default" onclick="history.back(-1)"><i class="fa fa-chevron-left"></i> 返回上级</button>

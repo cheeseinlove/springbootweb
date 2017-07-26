@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.dao.ReplyMapper" >
+  <resultMap id="BaseResultMap" type="com.example.model.Reply" >
+    <id column="rid" property="rid" jdbcType="INTEGER" />
+    <result column="tid" property="tid" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="time" property="time" jdbcType="TIMESTAMP" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    rid, tid, uid, time, content
+  </sql>
+  <select id="selectall" resultMap="BaseResultMap" resultType="com.example.model.Reply" parameterType="java.lang.Integer">
+    select * from reply where tid = #{tid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from reply
+    where rid = #{rid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from reply
+    where rid = #{rid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.example.model.Reply" >
+    insert into reply (rid, tid, uid, 
+      time, content)
+    values (#{rid,jdbcType=INTEGER}, #{tid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, 
+      #{time,jdbcType=TIMESTAMP}, #{content,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.model.Reply" >
+    insert into reply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        rid,
+      </if>
+      <if test="tid != null" >
+        tid,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        #{rid,jdbcType=INTEGER},
+      </if>
+      <if test="tid != null" >
+        #{tid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.model.Reply" >
+    update reply
+    <set >
+      <if test="tid != null" >
+        tid = #{tid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where rid = #{rid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.model.Reply" >
+    update reply
+    set tid = #{tid,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=INTEGER},
+      time = #{time,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=VARCHAR}
+    where rid = #{rid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -51,7 +51,11 @@
                                             <button type="submit" class="btn btn-default" onclick="reg()" >注册</button>
                                         </div>
                                     </td>
-
+                                    <td>
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button type="submit" class="btn btn-default" onclick="admin()" >管理员</button>
+                                        </div>
+                                    </td>
                                 </tr>
                             </table>
 
@@ -136,6 +140,9 @@
 
     function reg(){
         window.location.href='register';
+    }
+    function admin() {
+        window.location.href='admin';
     }
 </script>
 </body>

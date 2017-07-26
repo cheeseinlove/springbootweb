@@ -34,7 +34,7 @@ static  int rid = 1;
 
  */
     @RequestMapping(value = "/campus",method = RequestMethod.GET)
-    public String hello(Model model,@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize) {
+    public String hello(Model model,@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "2") Integer pageSize) {
 //        分页插件pagehelper使用
       PageHelper.startPage(pageNum, pageSize);
         SqlSession sqlSession = MyBatisUtil.getSqlSession();
@@ -55,6 +55,7 @@ static  int rid = 1;
         System.out.print("-----pagesize:"+p.getPageSize()+"\n");
         System.out.print("-----pagenum:"+p.getPageNum()+"\n");
      model.addAttribute("datalist",list);
+        model.addAttribute("totalPages",p.getPageNum());
         model.addAttribute("page",p);
 
 
@@ -93,7 +94,7 @@ User cuurrentuser= (User) request.getSession().getAttribute("currentuser");
      */
 
 @RequestMapping(value ="/campus/{tid}/topic",method = RequestMethod.GET)
-    public String viewtopic(@PathVariable(value = "tid")int tid ,Model model,@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "5") Integer pageSize){
+    public String viewtopic(@PathVariable(value = "tid")int tid ,Model model,@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "2") Integer pageSize){
     PageHelper.startPage(pageNum, pageSize);
     String addrep="com.example.dao.ReplyMapper.selectall";
     SqlSession sqlSession=MyBatisUtil.getSqlSession();
@@ -126,7 +127,11 @@ model.addAttribute("author",user.getUname());
     System.out.print("-----pagesize:"+p.getPageSize()+"\n");
     System.out.print("-----pagenum:"+p.getPageNum()+"\n");
 model.addAttribute("replylist",replies);
-model.addAttribute("page",p);
+    System.out.print("totalpage"+p.getTotal());
+    if (replies.size()==0){
+   model.addAttribute("totalPages",p.getPageNum());
+    }
+    model.addAttribute("page", p);
 
     return "topic";
 }

@@ -12,4 +12,28 @@ public class AdminController {
     public String homepage() {
         return "admin";
     }
+    @RequestMapping(value = "/403", method = RequestMethod.GET)
+    public String wrong403() {
+        return "403";
+    }
+    @RequestMapping(value = "/404", method = RequestMethod.GET)
+    public String wrong404() {
+        return "404";
+    }
+    @RequestMapping(value = "/500", method = RequestMethod.GET)
+    public String wrong500() {
+        return "500";
+    }
+    @RequestMapping(value = "/503", method = RequestMethod.GET)
+    public String wrong503() {
+        return "503";
+    }
+    @RequestMapping(value = "/faq", method = RequestMethod.GET)
+    public String faqs() {
+        return "faq";
+    }
+    @RequestMapping(value = "/help", method = RequestMethod.GET)
+    public String help() {
+        return "help";
+    }
 }

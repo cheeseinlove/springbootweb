@@ -19,6 +19,12 @@
     from topic
     where tid = #{tid,jdbcType=INTEGER}
   </select>
+  <select id="selectBySid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from topic
+    where tsid = #{sid,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from topic
     where tid = #{tid,jdbcType=INTEGER}

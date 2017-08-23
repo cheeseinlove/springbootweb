@@ -14,7 +14,7 @@
   </sql>
   <select id="selectUser" resultMap="BaseResultMap" parameterType="com.example.model.User" >
     select
-    uname,upassword
+    *
     from user
     where uname= #{uname,jdbcType=VARCHAR} AND upassword= #{upassword,jdbcType=VARCHAR}
   </select>

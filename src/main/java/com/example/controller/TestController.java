@@ -17,9 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by 讯 on 2017/4/7.
@@ -54,7 +52,14 @@ static  int rid = 1;
         model.addAttribute("isLastPage",p.isIsLastPage());
         System.out.print("-----pagesize:"+p.getPageSize()+"\n");
         System.out.print("-----pagenum:"+p.getPageNum()+"\n");
-     model.addAttribute("datalist",list);
+        Map<Topic,String> map=new HashMap<>();
+        list.forEach(a -> {
+            int uid = a.getTuid();
+            String getuser = "com.example.dao.UserMapper.selectByPrimaryKey";
+            User user = sqlSession.selectOne(getuser, uid);
+            map.put(a,user.getUname());
+        });
+     model.addAttribute("datalist",map);
         model.addAttribute("totalPages",p.getPageNum());
         model.addAttribute("page",p);
 
@@ -66,10 +71,11 @@ static  int rid = 1;
     @ResponseBody
     public String topicList(String title, String content, Model model,HttpServletRequest request){
 if (request.getSession().getAttribute("currentuser")==null){
-    System.out.print("----------------"+ request.getSession().getAttribute("currentuser"));
+    System.out.print("----------!!!!!!!!!!!!!!!!!------"+ request.getSession().getAttribute("currentuser"));
     return "wrong";
 }
 User cuurrentuser= (User) request.getSession().getAttribute("currentuser");
+
         Topic topic=new Topic();
         topic.setTid(i++);
         topic.setTsid(1);

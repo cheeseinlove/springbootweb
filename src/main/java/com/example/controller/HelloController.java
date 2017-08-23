@@ -62,7 +62,7 @@ public class HelloController {
         if (sqlSession.selectOne(stm, user) != null) {
 //            保存登录状态实现session共享
 
-            request.getSession().setAttribute("currentuser", user);
+            request.getSession().setAttribute("currentuser", sqlSession.selectOne(stm, user));
 
             return "ok";
 

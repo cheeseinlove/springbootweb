@@ -38,7 +38,7 @@
                     <div class="span12">
                         <ul class="nav nav-pills" style="display: inline-block; color: white;" >
                             <li class="active">
-                                <a href="#">首页</a>
+                                <a th:href=@{/welcome}>首页</a>
                             </li>
                             <li>
                                 <a href="#">成电校园</a>
@@ -97,11 +97,11 @@
     <tbody>
     <!--/*@thymesVar id="datalist" type="com"*/-->
     <tr th:each="el:${datalist}">
-        <td><a th:text="${el.title}" th:href="'/campus/'+ ${el.tid} + '/topic'"/></td>
+        <td><a th:text="${el.key.title}" th:href="'/campus/'+ ${el.key.tid} + '/topic'"/></td>
         <!--<td style="cursor: pointer"  th:text="${el.title}">    <a th:href="/campus/${tid}/topic">4444 </a></td>-->
-        <td th:text="${author}"></td>
-        <td th:text="${el.replycount}">  </td>
-<td th:text="${el.publishtime}"> </td>
+        <td th:text="${el.value}"></td>
+        <td th:text="${el.key.replycount}">  </td>
+<td th:text="${el.key.publishtime}"> </td>
     </tr>
     </tbody>
 </table>

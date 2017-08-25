@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.model.Reply;
 import com.example.model.Topic;
 import com.example.model.User;
 import com.example.util.MyBatisUtil;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.jws.WebParam;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +28,19 @@ public class AdminController {
     public String homepage() {
         return "admin";
     }
+    @RequestMapping(value = "/alogin", method = RequestMethod.GET)
+    public String adminlogin() {
+        return "alogin";
+    }
+    @RequestMapping(value = "/alogin", method = RequestMethod.POST)
+    @ResponseBody
+    public String adminlogins(String username,String password) {
 
+        if (username.equals("liuxun")&&password.equals("123456"))
+
+            return "ok";
+        else return "wrong";
+    }
     @RequestMapping(value = "/403", method = RequestMethod.GET)
     public String wrong403() {
         return "403";
@@ -98,5 +112,27 @@ public class AdminController {
         sqlSession.commit();
         return "ok";
     }
+    @RequestMapping(value = "/{sid}/topiclist/{tid}/topic",method = RequestMethod.GET)
+    public String replycontrol(@PathVariable(value = "tid") int tid, Model model){
+        SqlSession sqlSession = MyBatisUtil.getSqlSession();
+        String stm="com.example.dao.ReplyMapper.selectall";
+        String stm2="com.example.dao.TopicMapper.selectByPrimaryKey";
+        Topic topic=sqlSession.selectOne(stm2,tid);
 
+        List<Reply> list=sqlSession.selectList(stm,tid);
+        model.addAttribute("title",topic.getTitle());
+model.addAttribute("replylist",list);
+        return "replylist";
+    }
+    @RequestMapping(value = "/{sid}/topiclist/{tid}/topic",method = RequestMethod.POST)
+    @ResponseBody
+    public String deletereply(String rid){
+        int id=Integer.parseInt(rid);
+
+        SqlSession sqlSession = MyBatisUtil.getSqlSession();
+        String stm="com.example.dao.ReplyMapper.deleteByPrimaryKey";
+        sqlSession.delete(stm,id);
+        sqlSession.commit();
+        return "ok";
+    }
 }

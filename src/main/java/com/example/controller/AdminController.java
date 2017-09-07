@@ -45,7 +45,27 @@ public class AdminController {
     public String wrong403() {
         return "403";
     }
+    @RequestMapping(value = "/account", method = RequestMethod.GET)
+    public String account(Model model) {
+        String stm="com.example.dao.UserMapper.selectAllUser";
+        SqlSession sqlSession = MyBatisUtil.getSqlSession();
+        List<User> users=sqlSession.selectList(stm);
+        model.addAttribute("users",users);
 
+        return "account";
+    }
+    @RequestMapping(value = "/account", method = RequestMethod.POST)
+    @ResponseBody
+    public String account2(Model model, String uid) {
+        String stm="com.example.dao.UserMapper.deleteByPrimaryKey";
+        SqlSession sqlSession = MyBatisUtil.getSqlSession();
+        int id=Integer.parseInt(uid);
+        System.out.println("!!!!!!______________"+id+"_________________!!!!!");
+sqlSession.delete(stm,id);
+sqlSession.commit();
+
+        return "ok";
+    }
     @RequestMapping(value = "/404", method = RequestMethod.GET)
     public String wrong404() {
         return "404";
@@ -107,7 +127,7 @@ public class AdminController {
         SqlSession sqlSession = MyBatisUtil.getSqlSession();
         String stm = "com.example.dao.TopicMapper.deleteByPrimaryKey";
 //
-
+        System.out.println("!!!!!!______________"+id+"_________________!!!!!");
         sqlSession.delete(stm,id);
         sqlSession.commit();
         return "ok";

@@ -18,6 +18,12 @@
     from user
     where uname= #{uname,jdbcType=VARCHAR} AND upassword= #{upassword,jdbcType=VARCHAR}
   </select>
+  <select id="selectAllUser" resultMap="BaseResultMap"  >
+    select
+    *
+    from user
+
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

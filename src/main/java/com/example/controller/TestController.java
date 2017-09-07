@@ -31,6 +31,10 @@ static  int rid = 1;
 /*成电校园
 
  */
+@RequestMapping(value = "/loading1",method = RequestMethod.GET)
+public String loading(){
+    return "loading1";
+}
     @RequestMapping(value = "/campus",method = RequestMethod.GET)
     public String hello(Model model,@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "2") Integer pageSize) {
 //        分页插件pagehelper使用

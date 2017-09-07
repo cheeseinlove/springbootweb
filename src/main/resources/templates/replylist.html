@@ -101,7 +101,7 @@
     <ul id="dashboard-menu" class="nav nav-list collapse in">
         <li><a th:href=@{/admin}>Home</a></li>
         <li class="active"><a th:href=@{/contopic}>帖子管理</a></li>
-        <!--<li ><a th:href="user.html">Sample Item</a></li>-->
+        <li ><a th:href="@{/account.html}">账户管理</a></li>
         <li><a th:href=@{/media}>Media</a></li>
         <li><a th:href=@{/calender}>Calendar</a></li>
 
@@ -174,7 +174,7 @@
                         <td><a th:text="${el.content}" /></td>
 
                         <td>
-                            <a role="button" data-toggle="modal"><i class="icon-remove" onclick="deletes()" type="button"></i></a>
+                            <a role="button" data-toggle="modal"><i class="icon-remove" th:name="${el.rid}" onclick="deletes(this)" type="button"></i></a>
                         </td>
                     </tr>
                     </tbody>
@@ -218,14 +218,14 @@
 </div>
 
 
-<script src="lib/bootstrap/js/bootstrap.js"></script>
+<script src="/lib/bootstrap/js/bootstrap.js"></script>
 <script type="text/javascript">
         $("[rel=tooltip]").tooltip();
         $(function() {
             $('.demo-cancel-click').click(function(){return false;});
         });
-    function deletes() {
-        var rid = document.getElementById("rid").innerHTML;
+    function deletes(obj) {
+        var rid = $(obj).attr("name");
         if (confirm("确定删除此条回复吗？")) {
             $.ajax({
                 type: "post",
